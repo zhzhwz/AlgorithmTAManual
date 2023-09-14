@@ -2,18 +2,83 @@
 
 \usepackage{ctex}
 \usepackage{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\hypersetup{
+  colorlinks,
+  citecolor=violet,
+  linkcolor=gray,
+  urlcolor=blue}
 \geometry{a4paper,scale=0.8}
 
-\title{算法分析助教简易手册}
-\author{}
-\date{}
+\title{华东师范大学算法分析助教简易手册}
+\author{\href{mailto:zhzhwz@foxmail.com}{zhzhwz@foxmail.com}}
 
 \begin{document}
 
 \maketitle
+\tableofcontents
+\newpage
 
 \section{EOJ}
 
+ECNU Online Judge (EOJ) 是由华东师范大学的老学长开发的在线评测系统。
+
+\subsection{基础}
+
+\subsubsection{EOJ 的网址}
+
+\href{https://acm.ecnu.edu.cn/}{https://acm.ecnu.edu.cn/}
+
+\subsubsection{EOJ 的基础用法}
+
+请自行摸索或联系作者获取更多信息（我不觉得作者能给你比自行摸索能得到的更多的信息）。
+
+\subsection{EOJ Polygon}
+
+EOJ Polygon 是 EOJ 的『题目与比赛管理子系统』。
+
+\subsubsection{如何获取 EOJ Polygon 权限}
+
+\label{sssec_eoj_admin}
+
+普通用户没有使用 EOJ Polygon 的权限。你需要联系 EOJ 的管理员以获取权限。以下是可能的寻找 EOJ 管理员的方式：
+
+\begin{itemize}
+    \item 在 EOJ 主页上寻找管理团队的联系方式（目前为 \href{mailto:acmsupport@admin.ecnu.edu.cn}{acmsupport@admin.ecnu.edu.cn}），联系时表明你的身份和需求（即，需要 EOJ Polygon 的权限），提供你的 EOJ 用户名。（推荐）
+    \item 找你的课程老师，让他帮你联系算法竞赛团队的老师要权限
+    \item 在 EOJ QQ 群（当前群号：691713742）中问谁是管理员（如果你是社牛可以考虑这个方案）
+    \item 联系作者，作者帮你问（不推荐（如果实在不行就来问吧（叹气）））
+\end{itemize}
+
+\subsubsection{如何使用 EOJ Polygon}
+
+EOJ 的主要创建人张羽戈在知乎写了一篇（并没有那么）详尽的文档，包含了几乎所有的 Polygon 的常见用法。详见：\href{https://zhuanlan.zhihu.com/p/59869879}{EOJ Polygon 使用指北 - 知乎}
+
+\subsubsection{如何获取往届算法分析作业题和小测题的使用权限}
+
+以下是可能的方法：
+
+\begin{itemize}
+    \item 找你的课程老师，让他给你权限。前提是你的老师拥有对应作业集或比赛的权限。具体的操作步骤为：进入Polygon -- 比赛管理 -- 找到对应的作业集或比赛 -- 进入 -- 修改管理权限 -- 输入并选择要授予权限的用户 -- 点击``必须在这里保存''。
+    \item 找作者要权限。前提是作者有权限。
+    \item 如果想要其他题目的权限，联系对应题目或作业集或比赛的管理员，或直接联系 EOJ 的管理员（在第 \ref{sssec_eoj_admin} 小小节介绍了如何联系）。
+\end{itemize}
+
+在获取作业集或比赛的权限后，可以通过 Request Clone 来获取其中题目的权限。详见\href{https://zhuanlan.zhihu.com/p/59869879}{EOJ Polygon 使用指北 - 知乎}。
+
+\textbf{\textcolor{red}{注意：请务必在你创建的作业集或比赛中，在管理权限中加上你的老师。否则以后的助教就只能来找你要权限了。（你也可以在管理权限中加上作者（EOJ 用户名：zhzhwz））}}
+
+\subsubsection{如何创建新的题目}
+
+技术性的细节已经在 \href{https://zhuanlan.zhihu.com/p/59869879}{EOJ Polygon 使用指北 - 知乎} 中解释清楚了。如果你已经有一道题的题面和数据，你可以参照该文章的内容在 EOJ 上创建该题。如果你只有一个 idea，需要自己造数据、测试等，可以参见该文章：\href{https://oi-wiki.org/tools/testlib/}{testlib - OI Wiki}。（该文讲得并不是很清楚，你也可以用自己的方式造数据，或者自行查询网上关于 testlib 的教程。）
+
 \section{大夏学堂}
+
+大夏学堂有什么能讲的呢？自己摸索或者看大夏学堂的文档去吧。（主要是作者现在也登不进大夏学堂了）（欢迎补充该部分文档）
+
+\section{后记}
+
+若还有本文未能解决的问题，请先尝试自行解决，鼓励在解决之后在本文的\href{https://github.com/zhzhwz/AlgorithmTAManual}{仓库}提交 issue 或 pr 将对应内容加入手册中。若未能解决，可同样在本文的仓库提交 issue 或直接联系作者\href{mailto:zhzhwz@foxmail.com}{zhzhwz@foxmail.com}。 
 
 \end{document}
