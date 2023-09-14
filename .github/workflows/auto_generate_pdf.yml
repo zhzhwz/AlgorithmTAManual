@@ -20,7 +20,7 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: main.tex
+          root_file: ECNUAlgorithmTAManual.tex
           compiler: latexmk
           args: -xelatex -interaction=nonstopmode -file-line-error -recorder
 
@@ -28,6 +28,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: main.pdf
+          files: ECNUAlgorithmTAManual.pdf
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
