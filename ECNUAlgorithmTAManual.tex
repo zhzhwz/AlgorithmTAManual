@@ -5,6 +5,7 @@
 \usepackage{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage{xcolor}
+\usepackage{listings}
 \hypersetup{
   colorlinks,
   citecolor=violet,
@@ -119,7 +120,7 @@ EOJ Polygon 是 EOJ 的『题目与比赛管理子系统』。
 \begin{itemize}
     \item 找你的课程老师，让他给你权限。前提是你的老师拥有对应作业集或比赛的权限。具体的操作步骤为：进入Polygon -- 比赛管理 -- 找到对应的作业集或比赛 -- 进入 -- 修改管理权限 -- 输入并选择要授予权限的用户 -- 点击``必须在这里保存''。
     \item 找作者要权限。前提是作者有权限。
-    \item 如果想要其他作业集的权限，联系对应作业集或比赛的管理员，或直接联系 EOJ 的管理员（联系方法参见第 \ref{ssec:eoj_polygon_permission} 小小节）。
+    \item 如果想要其他作业集的权限，联系对应作业集或比赛的管理员，或直接联系 EOJ 的管理员（联系方法参见第 \ref{ssec:eoj_polygon_permission} 小节）。
 \end{itemize}
 
 \textbf{\textcolor{red}{注意：请务必在你创建的作业集或比赛中，在管理权限中加上你的老师。否则以后的助教就只能来找你要权限了。（你也可以在管理权限中加上作者（EOJ 用户名：zhzhwz））}}
@@ -128,19 +129,80 @@ EOJ Polygon 是 EOJ 的『题目与比赛管理子系统』。
 
 \label{ssec:create_homework_set}
 
+如图 \ref{fig:create_contest} 在 Polygon 中，进入比赛管理，选择 Add Contest，单击 Yes。系统会提示你创建比赛是无法撤销的，但由于比赛可以设置可见性，因此误创建也并不会产生过多影响。
 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{res/create_contest.png}
+  \caption{创建比赛}
+  \label{fig:create_contest}
+\end{figure}
+
+创建比赛后，需要对基本信息做一些修改。下面是一些比较重要的选项，更详细的信息请参见\href{https://zhuanlan.zhihu.com/p/59869879}{EOJ Polygon 使用指北 - 知乎}。
+
+\begin{itemize}
+  \item 修改管理权限：在这里，可以通过用户名搜索 EOJ 用户，授予他们对该场比赛的管理权限。添加完后，请立刻点击该栏下方的``必须在这里保存''。请注意，点击之后，该页面其他未保存的修改会被重置。因此，若该页有其他修改了未保存的项，请先点击页面最下方的确定保存修改，之后再添加管理员。一般来说，你应该将你的老师设为管理员。你也可以酌情将作者（zhzhwz）设为管理员。
+  \item 标题：显示在作业集或者比赛栏中的标题。
+  \item Allowed lang：允许学生提交的代码的语言类型。EOJ 目前（并在可预见的将来）不支持对比赛中某道题目设置允许的提交语言，也不允许对题目本身设置提交语言，而只能对一个作业集或比赛设置。
+  \item Contest Type：设定该 Contest 为作业集或比赛。
+  \item 时间设置、开始时间、结束时间：学生仅能在时间范围内提交代码。
+  \item 访问控制：一般作业和小测都设置为``仅受邀用户可见，赛后题目不公开''。验题（详见第 \ref{sec:verify_problem} 节）用比赛一般设置为``仅比赛管理员可见''，并将所有验题人设置为管理员。
+  \item 计分规则：一般用 OI 赛制，题目有部分分，无罚时。有需要可以使用 ACM 赛制，题目无部分分，有罚时。
+  \item 允许代码共享：``代码在比赛过程中对 AC 用户公开''的意思是，若学生通过了一道题，那么他就能看到其他学生对该题的提交。不是很重要，如果有学生要求，可以开放。
+  \item Case public：设为``评测报告总是开放''后，学生提交代码后，可以看到测试数据（若数据太大，则只能看到一部分）。若学生要求，可以在经老师同意后开放。（这可能能够帮助同学 debug，但也可能会导致成绩作弊。）
+  \item 确定：点击后将会保存该页除``修改''栏的三项外的所有修改。请注意，该按钮与``修改''栏的三项下的``必须在这里保存''按钮分别是互斥的。即，点击任意一个按钮都会保存对应的信息，并将其他按钮对应的未保存的信息全部丢弃。
+\end{itemize}
 
 \subsection{导入学生名单}
 
 \label{ssec:import_student_list}
 
+在创建的比赛中，进入``邀请码''页面。点击``从名单导入''。你会看到提示：一行一个。这边每一行的信息会成为对某个学生的备注。一行的信息格式可以参照如下格式：
+
+\begin{itemize}
+  \item 学号\ 姓名\ 组号（若有）
+\end{itemize}
+
+例如：111 张三 1。
+
+你可以在 Excel 中将这些信息填入不同的表格，之后直接复制即可。如图 \ref{fig:name_list_excel} 复制，粘贴后效果如图 \ref{fig:name_list_show}。
+
+\begin{figure}[htbp]
+  \centering
+  \begin{minipage}{0.4\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{res/name_list_excel.png}
+    \caption{Excel 中的信息}
+    \label{fig:name_list_excel}
+  \end{minipage}
+  \hspace{0.1\textwidth}
+  \begin{minipage}{0.4\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{res/name_list_show.png}
+    \caption{粘贴到 Polygon 后的信息}
+    \label{fig:name_list_show}
+  \end{minipage}
+\end{figure}
+
+你也可以根据实际情况设置信息的格式。
+
 \subsection{导出邀请码}
 
 \label{ssec:export_inviting_code}
 
+在导入学生名单后，点击导出为 csv。为了使其能在微信等软件直接打开，你可能需要将其转为 xlsx 或 pdf 等其他文件格式。转为 pdf 时，记得检查有无出现字符重叠或部分字符未显示的情况。之后将文件发给同学即可。
+
 \subsection{复制现有的题目}
 
 \label{ssec:copy_exist_problem}
+
+在 Polygon 题目管理中，选择 Request Clone。之后有三种情况：
+
+\begin{itemize}
+  \item 要复制的题目是你管理的比赛中的：这种情况下，按照提示输入 \lstinline{<ContestID>-<ProblemID>} 即可。
+  \item 要复制的题目是公开题目集中的：首先任选一个你管理的比赛（或参考 \ref{ssec:create_homework_set} 创建一个），参考第 \ref{ssec:add_problem_to_homework_set} 小节将该题目添加到你管理的比赛。之后，按照上一条的方法处理即可。
+  \item 都不是：联系题目或作业集的管理员，或者联系 EOJ 管理员（联系方式参见第 \ref{ssec:eoj_polygon_permission} 小节）请求获取权限。
+\end{itemize}
 
 \subsection{创建题目}
 
