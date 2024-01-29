@@ -4,6 +4,7 @@
 \usepackage{graphicx}
 \usepackage{geometry}
 \usepackage[hidelinks]{hyperref}
+\usepackage{listings}
 \usepackage{xcolor}
 \hypersetup{
   colorlinks,
@@ -37,6 +38,8 @@
 
 第 \ref{chap:workflow} 章介绍了一些常见的工作流程，读者可在需要完成相应工作时参阅。
 
+第 \ref{chap:create_problem} 章介绍了如何从零开始编写一道题。该部分属于进阶内容，请按需查阅。
+
 \bigbreak
 
 \noindent \textbf{更多}
@@ -44,8 +47,6 @@
 欢迎在本文的\href{https://github.com/zhzhwz/AlgorithmTAManual}{仓库}提交 issue 或 PR，促进本文的完善。
 
 若遇到无法解决的问题，可在本文的\href{https://github.com/zhzhwz/AlgorithmTAManual}{仓库}提交 issue 或直接\href{mailto:zhzhwz@foxmail.com}{邮件联系作者}。 
-
-若需要其他相关材料（包括各类文档的源文件，各类源代码等），请联系老师或作者。联系作者时请提供简要的身份证明，以避免材料外泄，对教学工作产生影响。
 
 \tableofcontents
 
@@ -57,33 +58,30 @@
 
 \section{EOJ 基础}
 
-ECNU Online Judge (EOJ) 是由华东师范大学已毕业的学长开发的在线评测系统。
+\label{sec:eoj_basics}
 
-\subsection{EOJ 的网址}
+\href{https://acm.ecnu.edu.cn/}{ECNU Online Judge (EOJ)} 是由华东师范大学老师和同学维护的在线评测系统。其主要为校内师生服务，但通常可以在校外访问。目前，EOJ 主要用于托管课程上机作业和考试、各类比赛等。\footnote{由于 EOJ 题目质量参差不齐且缺乏整理，不建议在没有指导的情况下利用 EOJ 练习上机能力。对此类需求，可以移步 \href{https://www.luogu.com.cn/}{洛谷}（偏算法竞赛，有分专题题单）、\href{https://leetcode.cn/}{力扣}（偏找工作机试）等网站。}
 
-\href{https://acm.ecnu.edu.cn/}{https://acm.ecnu.edu.cn/}
+EOJ 主要包含三部分：比赛、题目集和作业。
 
-\subsection{EOJ 的基础用法}
+题目集中可以看到所有公开的题目。每个题目（无论是否公开）都有一个唯一的 ID，可以在题目集的 \# 列、题目页面的标题前、题目页面的浏览器标签、题目页面的 URL 等各处找到。在稍后取得 Polygon 使用权限后，可以直接将公开的题目被加入你管理的比赛或作业集中，但不建议这么做，详见第 \ref{ssec:copy_exist_problem} 节。
 
-% TODO: add details
-
-请自行摸索或联系作者获取更多信息（我不觉得作者能给你比自行摸索能得到的更多的信息）。
+比赛与作业集类似，都包含一些题目和一个榜单。不同点在于，比赛通常只有数小时的开放时长，而作业通常有数月。大部分的比赛或作业集都是不公开的，需要权限或邀请码才能进入。在``权限''栏为绿色的勾说明该比赛或作业集是公开的，可以任意查看。比赛或作业集中的题目可能是公开的，也有可能是私有的。对于私有的题目，若你有该比赛或作业集的管理权限，则可以通过复制该题目的方法将其加入自己的比赛或作业集，详见第 \ref{ssec:copy_exist_problem} 节。
 
 \section{EOJ Polygon 基础}
 
-EOJ Polygon 是 EOJ 的『题目与比赛管理子系统』。
+EOJ Polygon 是 EOJ 的『题目与比赛管理子系统』，可以在该系统创建并管理题目、比赛等。
 
 \subsection{如何获取 EOJ Polygon 权限}
 
 \label{ssec:eoj_polygon_permission}
 
-普通用户没有使用 EOJ Polygon 的权限。你需要联系 EOJ 的管理员以获取权限。以下是可能的寻找 EOJ 管理员的方式：
+为了创建或修改作业集，需要首先获取 EOJ Polygon 的使用权限。普通用户没有使用 EOJ Polygon 的权限，你需要联系 EOJ 的管理员以获取权限。以下是可能的寻找 EOJ 管理员的方式：
 
 \begin{itemize}
     \item 在 EOJ 主页上寻找管理团队的联系方式（目前为 \href{mailto:acmsupport@admin.ecnu.edu.cn}{acmsupport@admin.ecnu.edu.cn}），联系时表明你的身份和需求（即，需要 EOJ Polygon 的权限），提供你的 EOJ 用户名。（推荐）
     \item 找你的课程老师，让他帮你联系算法竞赛团队的老师要权限
-    \item 在 EOJ QQ 群（当前群号：691713742）中问谁是管理员（如果你是社牛可以考虑这个方案）
-    \item 联系作者，作者帮你问（不推荐（如果实在不行就来问吧（叹气）））
+    \item 加入 EOJ QQ 群（当前群号：691713742）询问（不推荐）
 \end{itemize}
 
 \subsection{使用 EOJ Polygon}
@@ -119,42 +117,120 @@ EOJ Polygon 是 EOJ 的『题目与比赛管理子系统』。
 \begin{itemize}
     \item 找你的课程老师，让他给你权限。前提是你的老师拥有对应作业集或比赛的权限。具体的操作步骤为：进入Polygon -- 比赛管理 -- 找到对应的作业集或比赛 -- 进入 -- 修改管理权限 -- 输入并选择要授予权限的用户 -- 点击``必须在这里保存''。
     \item 找作者要权限。前提是作者有权限。
-    \item 如果想要其他作业集的权限，联系对应作业集或比赛的管理员，或直接联系 EOJ 的管理员（联系方法参见第 \ref{ssec:eoj_polygon_permission} 小小节）。
+    \item 如果想要其他作业集的权限，联系对应比赛或作业集的管理员，或直接联系 EOJ 的管理员（联系方法参见第 \ref{ssec:eoj_polygon_permission} 小小节）。
 \end{itemize}
 
-\textbf{\textcolor{red}{注意：请务必在你创建的作业集或比赛中，在管理权限中加上你的老师。否则以后的助教就只能来找你要权限了。（你也可以在管理权限中加上作者（EOJ 用户名：zhzhwz））}}
+\textbf{\textcolor{red}{注意：请务必在你创建的比赛或作业集中，在管理权限中加上你的老师。否则以后的助教就只能来找你要权限了。（你也可以在管理权限中加上作者（EOJ 用户名：zhzhwz））}}
 
-\subsection{创建一个作业集或比赛}
+\subsection{创建一个比赛或作业集}
 
 \label{ssec:create_homework_set}
+
+在 Polygon 的比赛管理中，点击 Add Contest。如有需要，也可以点击一旁的按钮复制以前的作业集作为新学期的作业集。在比赛中，有许多设置可以更改，细节请参阅\href{https://zhuanlan.zhihu.com/p/59869879}{EOJ Polygon 使用指北 - 知乎}。这里列出几项比较重要的设置：
+
+\begin{itemize}
+  \item 修改管理权限：为了使你的老师能够管理比赛或作业集，请在此处输入你老师的 EOJ ID，并点击下方的``必须在这里保存''。注意，该按钮和页面最下方的确定按钮是互斥的，点击任何一个按钮都会使其他未提交的修改失效。因此，请在修改管理权限后立刻保存；修改其他信息后先点击页面最下方的保存，再修改管理权限。
+  \item 标题：对外显示的标题。可参考往届的标题。
+  \item Allowed lang：一般作业可以不作修改，比赛根据实际情况删去不允许使用的语言（一般也不用改，最多删个Text）。
+  \item Contest type：这项决定了这是比赛还是作业集。
+  \item 开始时间、结束时间等：对于作业集，一般设置为学期初到学期末；对于比赛，则设置为比赛的起止时间。
+  \item 访问控制：在完成所有其他步骤，准备开放给学生时，将其改为``仅受邀用户可见，赛后题目不公开''。
+  \item 计分规则：主要使用前两种。OI 赛制有部分分，无罚时，榜单按总分排名；ACM 赛制无部分分，有罚时，榜单按通过题数第一关键字，罚时第二关键字排序。
+  \item Case public：这项决定了学生在提交代码后，（无论是否通过）能否看到测试数据。对于作业，若学生提出请求，可以在和老师讨论后，设置为``评测报告总是开放''。
+\end{itemize}
 
 \subsection{导入学生名单}
 
 \label{ssec:import_student_list}
 
+在比赛或作业集中切换到``邀请码''页面。点击``从名单导入''。将名单经过处理后，复制到此处。系统会为每行生成一个邀请码，并将该行的内容作为该邀请码对应用户的备注。常见的备注格式如：
+
+\begin{tabular}{lll}
+10995102400 & 张三 & 1
+\end{tabular}
+
+其中最后一项为组号（若有）。复制到此处的内容应该形如：
+
+\begin{tabular}{lll}
+10995102400 & 张三 & 1 \\
+10995102401 & 李四 & 1 \\
+10995102402 & 王五 & 2 \\
+ & $\dots$ & 
+\end{tabular}
+
+一种方便的方法是，在 Excel 中整理好名单，第一列为学号，第二列为姓名，第三列为组号。框选这三列的所有信息，复制后在导入名单处粘贴，如图 \ref{fig:excel}。系统会自动在每行的不同信息间加入制表符，最后在系统中会被转换为空格。你也可以选择其他方式处理名单后并粘贴到此处。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=.5\textwidth]{res/excel.png}
+  \caption{框选 Excel 中的名单}
+  \label{fig:excel}
+\end{figure}
+
 \subsection{导出邀请码}
 
 \label{ssec:export_inviting_code}
+
+在比赛或作业集的``邀请码''页面点击``导出为 csv''，将会下载一份 csv 文档，里面包含了邀请码和对应的备注。将其直接发送给学生或转换成 PDF 后发送给学生（方便在微信等不同软件中直接打开）即可。
 
 \subsection{复制现有的题目}
 
 \label{ssec:copy_exist_problem}
 
+可以复制的题目主要包括两种类型：EOJ 题目集中公开的题目和你管理的或作业集中的题目。此外，也可以复制你管理的题目，但一般没有必要。
+
+复制题目后，相当于创建了原题的一个副本，你对其有完全的管理权限，可以任意修改它的题面、数据、时限等。与此同时，原题的任何修改将不会影响到副本，也没有办法方便地将原题的修改同步到副本上。
+
+对于 EOJ 题目集中公开的题目，尽管可以直接将它们添加到比赛或作业集中，仍然建议首先复制题目，并把副本加入比赛或作业集。这么做可以保证你有对该题目的修改权限，以应对之后可能出现的各种情况。在 Polygon 的题目管理中，点击 Request Clone，输入题目的 ID（在第 \ref{sec:eoj_basics} 节有介绍）即可。
+
+对于你管理的比赛或作业集中的题目，你可能没有题目本身的权限。在 Polygon 的题目管理中，点击 Request Clone，根据提示输入 \lstinline{<ContestID>-<ProblemID>}。其中，\lstinline{<ContestID>} 可以在比赛或作业集页面的 URL 中找到，\lstinline{<ProblemID>} 指的是题目在该比赛或作业集中的 ID，即比赛或作业集页面``题目''页面中 \# 一栏。
+
 \subsection{创建题目}
 
 \label{ssec:create_new}
 
-\subsection{将题目添加到作业集或比赛}
+通常不会用到这个功能。然而，如果你需要自己原创题目或将其他网站的题目搬运到 EOJ，则需要创建题目。在题目管理中，点击``Add Problem''，输入一个仅由英文和数字构成的题目别名。这个名字不是很重要，可以随便取。之后，就会跳转到题目的管理页面。
+
+在发布之前，有一些工作要完成：
+
+\begin{itemize}
+  \item 添加管理员：一般可以省去这一步骤。然而，如果你希望别人也有管理该题目的权限，请在概览的基本信息处点击编辑，在管理员列表中输入他们的 ID 并选择，之后点击 OK。
+  \item 添加题面：题面会展示给做题者。在``题面''页面中，点击 Add Statement。在各个框内填入内容，支持 Markdown 语法。完成后，点击页面最下方的确定。之后，可以预览题面的展示效果。如需修改，在``题面''页面中，点击对应题面最右方的 Edit。如需预览，则点击对应题面 Name 一栏的超链接。如果创建了多个题面，请将要展示的题面设置为 Active。
+  \item 添加数据。题目需要测试点才能评测。可以手填数据，但通常会上传一个压缩包，包含输入输出的数据。压缩包内的文件需要满足一定的格式才能被识别。一般，文件名可以标为 \lstinline|1.in|, \lstinline|1.out|, \lstinline|2.in|, \lstinline|2.out|, $\dots$, \lstinline|10.in|, \lstinline|10.out|，即每组数据两个文件，其中 in 为输入，out 为对应的输出，系统会自动识别文件名。若压缩包较大，可能需要等待一段时间才能上传完毕。之后，可以单独设置每组数据。勾选加入样例则做题者可以在题面看见这组数据，包括输入和输出；勾选是有效的测试点后这组数据才会被评测。通常会把样例取消勾选是有效的测试点或者将分数设置为0分。
+  \item 编辑时限和内存限制：一般可以使用默认的配置。但如果你的题目有特殊需求，可以在概览中编辑。
+\end{itemize}
+
+完成所有的工作后，在概览页面点击发布。
+
+\subsection{将题目添加到比赛或作业集}
 
 \label{ssec:add_problem_to_homework_set}
+
+在比赛或作业集的``题目''页面，在最上方的 Search for problems 中输入题目 ID，选择后点击 Add。只有公开题目或你管理的题目才能被搜索到并添加到比赛或作业集。
+
+你可以上下拖动题目以更改其排列顺序。需要点击 Save orders 以保存。
 
 \subsection{更新题目}
 
 \label{ssec:update_problem}
 
+在题目管理中，点击要更新的题目后的 Latest Version。对于已经发布的题目，右上角有一个``只读版本''的提示。需要点击其中的复制，创建新版本后才能修改。常见的需要修改的部分可以参见第 \ref{ssec:create_new} 节。修改完成后，点击概览页面的发布。之后，可以在``已发布的版本''查看效果。
+
 \subsection{重判题目}
 
 \label{ssec:rejudge_problem}
+
+在更改了题目的时限、数据等内容后，可能需要重判已有的提交。提交有两种类型，一种是直接在题目下的提交，提交的页面 URL 一般为 \lstinline|https://acm.ecnu.edu.cn/problem/<problem ID>/|；另一种是在比赛或作业集中的提交，题目被加入比赛或作业集后，通过该比赛或作业集访问的都属于这种提交。其页面 URL 一般为 \lstinline|https://acm.ecnu.edu.cn/contest/<contest ID>/problem/<problem ID in contest>/|。
+
+对于前一种提交，需要在题目的管理界面，切换到``提交''页面。该页面可以看到所有提交，包括通过比赛或作业集进行的提交。点击某一提交对应的重判即可重判该提交，无论它是通过何种途径提交的。点击最上方的重判可以重判所有\textbf{\color{red} 直接在题目下进行的提交}，在比赛或作业集中的提交将不会被重判。
+
+对于后一种提交，在比赛或作业集的管理界面，切换到``提交''页面，可以看到所有该比赛或作业集中的提交。若需要重判某一特定提交，点击提交最后的重判即可，也可以参考上一段的方法在题目的管理页面重判。若需要重判某一题的所有提交或该比赛或作业集的所有提交，点击最上方的重判。可以选择重判某题或所有题。
+
+\subsection{下载榜单}
+
+\label{ssec:download_ranking_list}
+
+在比赛结束后可能需要下载榜单以统计成绩。在比赛或作业集的前台，选择榜单，将鼠标移至``重新计算''右侧的齿轮，选择``下载为 csv''。
 
 \chapter{大夏学堂}
 
